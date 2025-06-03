@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"; // Importa useEffect
 import type { MovimientoData, MovimientoFormData } from "../helpers/interfaces";
-import getDB, { guardarMovimiento } from "../helpers/data";
+import { guardarMovimiento } from "../helpers/data";
 
 const NuevoMovimiento = ({ polizaSelected, movimientoSeleccionadoUUID, movimientoSeleccionado, onMovimientoSaved }: { polizaSelected: string, movimientoSeleccionadoUUID: string | null, movimientoSeleccionado: MovimientoData | null, onMovimientoSaved: () => void }) => {
 
@@ -36,7 +36,6 @@ const NuevoMovimiento = ({ polizaSelected, movimientoSeleccionadoUUID, movimient
 
     const submitMovimientoForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const db = await getDB();
         const movimientoParaGuardar: MovimientoData = {
             ...formData,
             polizaUUID: polizaSelected,
@@ -45,7 +44,7 @@ const NuevoMovimiento = ({ polizaSelected, movimientoSeleccionadoUUID, movimient
         if (movimientoSeleccionadoUUID) {
             movimientoParaGuardar.movimientoUUID = movimientoSeleccionadoUUID;
         }
-        await guardarMovimiento(db, movimientoParaGuardar);
+        await guardarMovimiento(movimientoParaGuardar);
         onMovimientoSaved();
     }
 
@@ -68,7 +67,7 @@ const NuevoMovimiento = ({ polizaSelected, movimientoSeleccionadoUUID, movimient
 
                     <div className="form-field compact-field">
                         <label htmlFor="monto">Monto:</label>
-                        <input value={formData.monto} name="monto" onChange={handleChange} type="number" id="monto" step="0.01" required />
+                        <input value={formData.monto.toFixed(2)} name="monto" onChange={handleChange} type="number" id="monto" step="0.01" required />
                     </div>
                 </div>
 

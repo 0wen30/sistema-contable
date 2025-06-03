@@ -3,6 +3,7 @@ import './App.css'
 import ListadoPolizas from './components/ListadoPolizas'
 import EditarPoliza from './components/EditarPoliza';
 import type { Modo } from './helpers/interfaces'
+import Reportes from './components/Reportes';
 
 function App() {
 
@@ -11,6 +12,17 @@ function App() {
 
 	return (
 		<>
+			<button 
+				className="btn-reportes" 
+				style={{ display: modo === 'ListadoPolizas' ? 'block' : 'none' }} 
+				onClick={() => setModo('Reportes')}
+			>Reportes</button>
+			{
+				modo === 'Reportes' 
+				&& <Reportes 
+					setModo={setModo} 
+				/>
+			}
 			{
 				modo === 'ListadoPolizas' 
 				&& <ListadoPolizas 

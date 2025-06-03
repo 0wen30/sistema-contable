@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import getDB, { eliminarPoliza, obtenerTodasLasPolizas } from '../helpers/data';
+import { eliminarPoliza, obtenerTodasLasPolizas } from '../helpers/data';
 import type { Modo, PolizaData } from '../helpers/interfaces';
 import { NuevaPoliza } from './NuevaPoliza';
+import TablaPolizas from './TablaPolizas';
 
 function ListadoPolizas({ setModo, setPolizaSelected }: {
     setModo: (modo: Modo) => void;
@@ -22,9 +23,8 @@ function ListadoPolizas({ setModo, setPolizaSelected }: {
 
     const eliminarPolizaSeleccionada = async () => {
         try {
-            const db = await getDB();
             if (!polizaSeleccionadaUUID) return;
-            await eliminarPoliza(db, polizaSeleccionadaUUID);
+            await eliminarPoliza(polizaSeleccionadaUUID);
             obtenerPolizas();
             setPolizaSeleccionadaUUID(null);
         } catch (error) {
@@ -34,8 +34,7 @@ function ListadoPolizas({ setModo, setPolizaSelected }: {
 
     const obtenerPolizas = async () => {
         try {
-            const db = await getDB();
-            const pol = await obtenerTodasLasPolizas(db);
+            const pol = await obtenerTodasLasPolizas();
             setPolizas(pol);
         } catch (error) {
             console.log(error);
@@ -56,36 +55,7 @@ function ListadoPolizas({ setModo, setPolizaSelected }: {
                 </div>
             </header>
             <div className="polizas">
-                <div>
-                    {polizas.length === 0 ? (
-                        <p>No hay pólizas para mostrar.</p>
-                    ) : (
-                        <table className="polizas-table">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Tipo</th>
-                                    <th>Folio</th>
-                                    <th>Concepto</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {polizas.map((poliza) => (
-                                    <tr
-                                        key={poliza.polizaUUID}
-                                        onClick={() => handleRowClick(poliza)}
-                                        className={polizaSeleccionadaUUID === poliza.polizaUUID ? 'fila-seleccionada' : ''}
-                                    >
-                                        <td>{poliza.fecha}</td>
-                                        <td>{poliza.tipo}</td>
-                                        <td>{poliza.folio}</td>
-                                        <td>{poliza.concepto}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
+                <TablaPolizas polizas={polizas} handleRowClick={handleRowClick} polizaSeleccionadaUUID={polizaSeleccionadaUUID} />
                 <NuevaPoliza obtenerPolizas={obtenerPolizas} />
             </div>
         </div>

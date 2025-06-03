@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { MovimientoData } from '../helpers/interfaces';
-import getDB, { eliminarMovimiento, obtenerTodasLosMovs } from '../helpers/data';
+import { eliminarMovimiento, obtenerTodasLosMovs } from '../helpers/data';
 import NuevoMovimiento from './NuevoMovimiento';
 import DatosPoliza from './DatosPoliza';
 
@@ -13,8 +13,7 @@ const ListadoMovimientos = ({ polizaSelected }:{
 
     const obtenerMovimientos = async () => {
         try {
-            const db = await getDB();
-            const pol = await obtenerTodasLosMovs(db, polizaSelected);
+            const pol = await obtenerTodasLosMovs(polizaSelected);
             setMovimientos(pol);
         } catch (error) {
             console.log(error);
@@ -36,9 +35,8 @@ const ListadoMovimientos = ({ polizaSelected }:{
 
     const eliminarMovimientoSeleccionado = async () => {
         try {
-            const db = await getDB();
             if (!movimientoSeleccionadoUUID) return;
-            await eliminarMovimiento(db, movimientoSeleccionadoUUID);
+            await eliminarMovimiento(movimientoSeleccionadoUUID);
             await obtenerMovimientos();
             setMovimientoSeleccionadoUUID(null);
             setMovimientoSeleccionado(null);
@@ -74,7 +72,7 @@ const ListadoMovimientos = ({ polizaSelected }:{
                                 >
                                     <td>{movimiento.cuenta}</td>
                                     <td>{movimiento.tipo}</td>
-                                    <td>${movimiento.monto}</td>
+                                    <td>${movimiento.monto.toFixed(2)}</td>
                                     <td>{movimiento.concepto}</td>
                                     <td>{movimiento.referencia}</td>
                                 </tr>

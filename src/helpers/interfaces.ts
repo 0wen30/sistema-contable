@@ -1,3 +1,5 @@
+export type Modo = 'ListadoPolizas' | 'EditarPoliza' | 'Reportes';
+
 export interface MovimientoFormData {
     cuenta: string;
     tipo: string;
@@ -11,9 +13,12 @@ export interface MovimientoData extends MovimientoFormData {
     polizaUUID: string;
 }
 
-export type Modo = 'ListadoPolizas' | 'EditarPoliza';
+export interface MovimientoConDetalles extends MovimientoData {
+  polizaTipo: string;
+  polizaFolio: number | string;
+  polizaFecha: string | Date;
+}
 
-// Define la interfaz base para los datos del formulario de la póliza
 export interface PolizaFormData {
     fecha: string;
     tipo: string;
@@ -21,15 +26,13 @@ export interface PolizaFormData {
     concepto: string;
 }
 
-// Extiende la interfaz base para incluir el UUID de la póliza
 export interface PolizaData extends PolizaFormData {
     polizaUUID: string;
 }
 
-// Define una interfaz para los datos que se usarán en el almacenamiento, incluyendo las nuevas propiedades
 export interface PolizaStoreData extends PolizaData {
-    periodo: string; // Propiedad para el índice "periodo"
-    folioUnico: [string, string, number | string]; // Propiedad para el índice "folioUnico"
+    periodo: string;
+    folioUnico: [string, string, number | string];
 }
 
 export class Poliza {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getDB, { obtenerPoliza, guardarPoliza } from "../helpers/data";
+import { obtenerPoliza, guardarPoliza } from "../helpers/data";
 import type { PolizaFormData } from "../helpers/interfaces";
 
 function DatosPoliza({ polizaSelected }: { polizaSelected: string }) {
@@ -14,8 +14,7 @@ function DatosPoliza({ polizaSelected }: { polizaSelected: string }) {
 
     const obtenerPolizas = async () => {
         try {
-            const db = await getDB();
-            const pol = await obtenerPoliza(db, polizaSelected);
+            const pol = await obtenerPoliza(polizaSelected);
             if (!pol) return;
             const datosPolizaCargada: PolizaFormData = {
                 fecha: pol.fecha,
@@ -37,7 +36,7 @@ function DatosPoliza({ polizaSelected }: { polizaSelected: string }) {
     useEffect(() => {
     if (polizaOriginal && polizaEditada) {
         const isModified =
-            polizaOriginal.fecha !== polizaEditada.fecha
+            polizaOriginal.fecha !== polizaEditada.fecha ||
             polizaOriginal.tipo !== polizaEditada.tipo ||
             polizaOriginal.folio !== polizaEditada.folio ||
             polizaOriginal.concepto !== polizaEditada.concepto;
@@ -57,8 +56,7 @@ function DatosPoliza({ polizaSelected }: { polizaSelected: string }) {
         if (!polizaEditada || !polizaSelected) return;
 
         try {
-            const db = await getDB();
-            await guardarPoliza(db, { ...polizaEditada, polizaUUID: polizaSelected, fecha: polizaEditada.fecha }); // Llamamos a tu método guardarPoliza
+            await guardarPoliza({ ...polizaEditada, polizaUUID: polizaSelected, fecha: polizaEditada.fecha }); // Llamamos a tu método guardarPoliza
             setPolizaOriginal(polizaEditada);
             setFueModificado(false);
         } catch (error) {

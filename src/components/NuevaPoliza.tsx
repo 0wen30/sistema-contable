@@ -1,12 +1,13 @@
 import { useState } from "react"
 import type { PolizaData, PolizaFormData } from "../helpers/interfaces"
-import getDB, { guardarPoliza } from "../helpers/data"
+import { guardarPoliza } from "../helpers/data"
 
 
-export const NuevaPoliza = ({obtenerPolizas} : {obtenerPolizas: () => void}) => {
+export const NuevaPoliza = ({ obtenerPolizas }: { obtenerPolizas: () => void }) => {
 
     const [flecha, setflecha] = useState("⬅️")
     const [display, setdisplay] = useState("none")
+    const [message, setmessage] = useState("")
 
     const toogleButton = () => {
         if (display === "none") {
@@ -36,13 +37,23 @@ export const NuevaPoliza = ({obtenerPolizas} : {obtenerPolizas: () => void}) => 
 
     const submitPolizaForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        const db = await getDB();
         const polizaParaGuardar: PolizaData = {
             ...formData,
             folio: Number(formData.folio),
             polizaUUID: crypto.randomUUID()
         };
-        guardarPoliza(db, polizaParaGuardar);
+        try {
+            await guardarPoliza(polizaParaGuardar);
+        } catch (error: any) {
+            if (error && error.message && error.message.includes('ConstraintError')) {
+                setmessage('Ya existe una póliza con el mismo folio y tipo.');
+            } else {
+                setmessage('Error al guardar la póliza: ' + error.message);
+            }
+            setTimeout(() => {
+                setmessage('');
+            }, 3000);
+        }
         obtenerPolizas();
     }
 
@@ -86,6 +97,7 @@ export const NuevaPoliza = ({obtenerPolizas} : {obtenerPolizas: () => void}) => 
                     <textarea id="concepto" name="concepto" onChange={handleChange} required></textarea>
                     <button type="submit">Enviar</button>
                 </form>
+                <p className="message" style={{ textAlign: 'center', display: message ? 'block' : 'none', color: 'red' }}>{message}</p>
             </div>
         </div>
     )

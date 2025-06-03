@@ -498,3 +498,180 @@
 div[style*="display: flex"] {
     align-items: flex-start; /* Alinea los elementos al inicio si están en una fila */
 }
+
+/* Estilos para el contenedor principal de los filtros */
+.filtrosPoliza {
+  display: flex; /* Para organizar los elementos en una fila */
+  justify-content: flex-start; /* Alinea los elementos al inicio */
+  align-items: center; /* Centra verticalmente los elementos */
+  gap: 10px; /* Espacio entre los elementos de los filtros */
+  margin-bottom: 10px; /* Margen en la parte inferior para separar de otros elementos */
+}
+
+/* Estilos generales para las etiquetas */
+.filtrosPoliza label {
+  font-weight: bold; /* Opcional: hace las etiquetas más visibles */
+  margin-right: 5px; /* Espacio entre la etiqueta y el input/select */
+}
+
+/* Estilos para los selectores (dropdowns) */
+.filtrosPoliza select {
+  padding: 8px; /* Relleno interno */
+  border: 1px solid #ccc; /* Borde suave */
+  border-radius: 4px; /* Bordes redondeados */
+  font-size: 1rem; /* Tamaño de fuente */
+}
+
+/* Estilos para el contenedor del periodo (mes/año) */
+.filtrosPoliza div {
+  display: flex; /* Para organizar los inputs de mes y año en fila */
+  align-items: center; /* Centra verticalmente */
+  gap: 5px; /* Espacio entre los inputs */
+}
+
+/* Estilos para los campos de entrada de número (mes/año) */
+.filtrosPoliza input[type="number"] {
+  padding: 8px; /* Relleno interno */
+  border: 1px solid #ccc; /* Borde suave */
+  border-radius: 4px; /* Bordes redondeados */
+  width: 90px; /* Ancho fijo para que no se vean demasiado grandes */
+  text-align: center; /* Centra el texto */
+  font-size: 1rem; /* Tamaño de fuente */
+}
+
+/* Contenedor principal de la página de reportes */
+.pagina-reportes {
+  padding: 20px;
+  max-width: 1200px; /* Ancho máximo para la página de reportes */
+  margin: 0 auto; /* Centrar el contenido */
+  font-family: Arial, sans-serif; /* Fuente general */
+}
+
+/* --- */
+
+/* Estilos para el botón "Regresar" */
+.btn-reportes {
+  background-color: #007bff; /* Azul primario */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px; /* Espacio debajo del botón */
+  transition: background-color 0.2s ease; /* Transición suave al pasar el ratón */
+}
+
+.btn-reportes:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
+
+/* --- */
+
+/* Estilos para el título H1 */
+.pagina-reportes h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px; /* Espacio debajo del título */
+  font-size: 2.5rem;
+}
+
+/* --- */
+
+/* Contenedor de los filtros de cuentas */
+.filtrosCuentas {
+  display: flex;
+  justify-content: flex-start; /* Alinea los elementos al inicio */
+  align-items: flex-end; /* Alinea los elementos a la parte inferior (útil si hay etiquetas y inputs) */
+  gap: 20px; /* Espacio entre los grupos de filtros y el botón */
+  margin-bottom: 30px; /* Espacio debajo de los filtros */
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Contenedores individuales de label/input dentro de filtrosCuentas */
+.filtrosCuentas > div {
+  display: flex;
+  flex-direction: column; /* Apila la etiqueta sobre el input */
+  gap: 5px; /* Espacio entre la etiqueta y el input */
+}
+
+/* Estilos para las etiquetas de los filtros */
+.filtrosCuentas label {
+  font-weight: bold;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* Estilos para los campos de input de texto */
+.filtrosCuentas input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 200px; /* Ancho fijo para el input de cuenta */
+}
+
+/* Estilos para el botón "Generar" dentro de los filtros */
+.filtrosCuentas button {
+  background-color: #28a745; /* Verde para el botón de acción */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.filtrosCuentas button:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+/* --- */
+
+/* Estilos para la sección que contiene la tabla de movimientos */
+.tabla-movimientos-reportes {
+  margin-top: 20px; /* Espacio arriba de la tabla de resultados */
+}
+
+/* Estilos generales para la tabla de movimientos (reutilizando la clase anterior) */
+.tabla-movimientos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px; /* Espacio debajo de la tabla */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-movimientos th,
+.tabla-movimientos td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.tabla-movimientos th {
+  background-color: #f2f2f2;
+  color: #333;
+  font-weight: bold;
+}
+
+.tabla-movimientos tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.tabla-movimientos tbody tr:hover {
+  background-color: #eef;
+}
+
+/* --- */
+
+/* Estilos para el mensaje "No hay movimientos" */
+.pagina-reportes p {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: 30px;
+}
